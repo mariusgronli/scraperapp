@@ -1,0 +1,61 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+
+
+<!-- Section About algo -->
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-lg">
+          <h1 class="text-center heading-border" >Journey AS - Real estate algorithm</h1>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-sm-5 text-center">
+            <img src="{% static 'img/scraper2.jpg'%}" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-sm-2">
+
+        </div>
+        <div class="col-sm"-5>
+          <br>
+          <div class="row">
+            <div class="col-sm">
+                <h3><i class="fas fa-database" style="color:#65a5dd;"></i> Collects all the data for you</h3>
+                <p class="lead w-10">The app scans market listings in Norway to collect data about listings.
+                  The data is collected daily and updated at 8pm every day.</p>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm">
+                <h3><i class="fas fa-laptop-code" style="color:#3c94e1;"></i> Python analyzes your data</h3>
+                <p class="lead w-10">The app uses powerfull python libraries like pandas, numpy, scipy,
+                math and custom made algorithims to collect and format data.</p>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-sm">
+                <h3><i class="fas fa-chart-line" style="color:#0d5b9f;"></i> Presents the analyzed data </h3>
+                <p class="lead w-10">All analyzed data are displayed in a very simplistic format. Which makes it easy for
+                  you to capture key data in an instant. You will get key statistics about your hosuing markets. As well as formated data which can be used in powerful analysis.</p>
+            </div>
+          </div>
+        </div><!-- end col -->
+      </div> <!-- end row -->
+
+      <br><br>
+    </div> <!-- end container -->
+  </div><!-- end container-fluid -->
+</div><!-- end content-container -->
+
+
+{% endblock %}

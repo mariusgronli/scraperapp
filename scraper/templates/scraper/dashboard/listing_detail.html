@@ -1,0 +1,213 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg">
+          <div class="card shadow border-left-prim">
+            <div class="card-body text-center">
+                <p class="lead">Market: <b>{{listing.market}}</b></p>
+                <p class="lead"> Adress: {{listing.adress}}</p>
+                <p class="lead"> Listing: <a href="{{listing.url}}">{{listing.url}}</a></b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br><br>
+
+
+      <div class="row justify-content-center">
+        <div class="card-deck w-100">
+          <!--Price card-->
+          <div class="card shadow card-daily">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <span>
+                <i class="fas fa-money-bill-wave fa-daily"></i>
+                </span>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <div class="card-body">
+                  <h5>{{listing.prisantydning}}NOK</h5>
+                  <p class="lead">Apartment price</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--Sqm card-->
+          <div class="card shadow card-daily">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <span>
+                <i class="fas fa-box fa-daily"></i>
+                </span>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <div class="card-body">
+                  <h5>{{listing.bruttoareal}}m²</h5>
+                  <p class="lead">Bruttoareal</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br><br>
+
+      <div class="row justify-content-center">
+        <!--Bilde card-->
+      <div class="col-lg-6">
+          <div class="card shadow">
+            <div class="card-body text-center">
+              <div class="card-body text-center">
+                <img src="{{listing.bilde}}" class="img-fluid" alt="Responsive image">
+              </div>
+
+            </div>
+          </div>
+      </div>
+      <div class="col-lg-6">
+          <!--Info card-->
+          <div class="card shadow">
+            <div class="card-header text-center text-white" style="background-color:#3c8094;">
+                <h5>Price information</h5>
+            </div>
+            <div class="body-body">
+                <table class="table table-striped">
+                  <tbody>
+                    {% if listing.fellesgjeld != 0 %}
+                    <tr>
+                      <th scope="row">Fellesgjeld</th>
+                      <td>{{listing.fellesgjeld}}NOK</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.omkostninger != 0 %}
+                    <tr>
+                      <th scope="row">Omkostninger</th>
+                      <td>{{listing.omkostninger}}NOK</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.felleskostnader != 0 %}
+                    <tr>
+                      <th scope="row">Felleskostnader</th>
+                      <td>{{listing.felleskostnader}}NOK</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.totalpris != 0 %}
+                    <tr>
+                      <th scope="row">Totalpris</th>
+                      <td>{{listing.totalpris}}NOK</td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="card-header text-center text-white" style="background-color:#3c8094;">
+                <h5>House type</h5>
+            </div>
+            <div class="body-body">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th scope="row">Boligtype</th>
+                      <td>{{listing.boligtype}}</td>
+                    </tr>
+                    <tr>
+                      <th scope="row">Eieform</th>
+                      <td>{{listing.eieform}}</td>
+                    </tr>
+                    {% if listing.etasje != 0 %}
+                    <tr>
+                      <th scope="row">Etasje</th>
+                      <td>{{listing.etasje}}</td>
+                    </tr>
+                    {% endif %}
+                    <tr>
+                      <th scope="row">Byggeår</th>
+                      <td>{{listing.byggeår}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+            <div class="card-header text-center text-white" style="background-color:#3c8094;">
+                <h5>Measurements</h5>
+            </div>
+            <div class="body-body">
+                <table class="table table-striped">
+                  <tbody>
+                    {% if listing.primærrom != 0 %}
+                    <tr>
+                      <th scope="row">Primærrom</th>
+                      <td>{{listing.primærrom}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.grunnflate != 0 %}
+                    <tr>
+                      <th scope="row">Grunnflate</th>
+                      <td>{{listing.grunnflate}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.tomteareal != 0 %}
+                    <tr>
+                      <th scope="row">Tomteareal</th>
+                      <td>{{listing.tomteareal}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.areal != 0 %}
+                    <tr>
+                      <th scope="row">Areal</th>
+                      <td>{{listing.areal}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.bruksareal != 0 %}
+                    <tr>
+                      <th scope="row">Bruksareal</th>
+                      <td>{{listing.bruksareal}}</td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+            </div>
+            <div class="card-header text-center text-white" style="background-color:#3c8094;">
+                <h5>Rooms</h5>
+            </div>
+            <div class="body-body">
+                <table class="table table-striped">
+                  <tbody>
+                    {% if listing.rom != 0 %}
+                    <tr>
+                      <th scope="row">Rom</th>
+                      <td>{{listing.rom}}</td>
+                    </tr>
+                    {% endif %}
+                    {% if listing.soverom != 0 %}
+                    <tr>
+                      <th scope="row">Soverom</th>
+                      <td>{{listing.soverom}}</td>
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+            </div>
+          </div><!-- End card-->
+        </div><!-- End Col-->
+      </div><!-- End row-->
+
+        <br><br>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

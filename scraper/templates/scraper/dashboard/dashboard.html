@@ -1,0 +1,379 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+
+      <div class="text-left">
+        <h3>House market tracker: </h3>
+      </div>
+      <hr>
+
+      <div class="row">
+        <div class="col-lg text-center">
+          <h5>Value scanned: <h2>{{value}}NOK</h2></h5>
+        </div>
+
+        <div class="col-lg">
+          <div class="row">
+            <div class="col-lg">
+              <p>Last day increase/decrease</p>
+            </div>
+            <div class="col-lg">
+              <p>Last day added value scanned</p>
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-lg">
+              <h4 style="color:green;">{{portsummary.ld_percent_change}}4%</h4>
+            </div>
+
+            <div class="col-lg">
+              <h4 style="color:green;">+{{last_day}}NOK</h4>
+            </div>
+
+          </div>
+        </div>
+      </div> <!-- end
+
+         summary-->
+      <hr>
+
+
+    </div>
+  </div>
+</div>
+
+<div class="content-container"> <!-- Start cards-->
+  <div class="container-fluid">
+    <div class="container">
+      <!-- Card and modal for expected return-->
+      <div class="card-deck">
+      <div class="card text-white bg-dark">
+        <div class="card-body ">
+          <h5 class="card-title text-center">Ads scanned</h5>
+          <hr>
+          <br>
+            <h2 class="card-text text-center" style="color:#ffffb8;">{{listings}}</h2>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-10">
+              <small class="text-muted">Last updated: 08.09.2020</small>
+            </div>
+            <div class="col-lg-2 text.ce">
+              <h5><a href="#" data-toggle="modal" data-target="#returnModal"><i class="far fa-question-circle" style="color:white;" ></i></a></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="returnModal" tabindex="-1" role="dialog" aria-labelledby="returnModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="returnModalLabel">How many ads have the algorithm searched trough</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <p class="lead">As a well-informed investor, you naturally want to
+                 know the expected return of your portfolio—its anticipated performance
+                and the overall profit or loss it's racking up. Expected return is just that:
+                expected. It is not guaranteed, as it is based on historical returns
+                 and used to generate expectations, but it is not a prediction.</p>
+              <h5>Calculations:</h5>
+              <hr>
+              <p>To calculate a portfolio's expected return, an investor needs to calculate
+                 the expected return of each of its holdings, as well as the overall
+                 weight of each holding. The basic expected return formula involves
+                  multiplying each asset's weight in the portfolio by its expected return,
+                  then adding all those figures together. The expected return is then annulized.</p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card and Modal for volatility-->
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5 class="card-title text-center">Markets being tracked</h5>
+          <hr>
+          <br>
+            <h2 class="card-text text-center" style="color:#a6ec8f">{{markets}}</h2>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-10">
+              <small class="text-muted">Last updated: 08.09.2020</small>
+            </div>
+            <div class="col-lg-2 text.ce">
+              <h5><a href="#" data-toggle="modal" data-target="#volatilityModal"><i class="far fa-question-circle" style="color:white;" ></i></a></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="volatilityModal" tabindex="-1" role="dialog" aria-labelledby="volatilityModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="volatilityModalLabel">Markets being scanned </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <p class="lead">Portfolio variance is a measurement of risk, of how the aggregate actual returns of a set of securities making up a portfolio fluctuate over time.
+              Portfolio variance is a measure of a portfolio's overall risk, and is the portfolio's standard deviation squared.</p>
+              <h5>Calculations:</h5>
+              <hr>
+              <p>The app caclulates the volatility by multiplying the squared
+                weight of each security by its corresponding variance and adding
+                 twice the weighted average weight multiplied by the covariance of
+                 all individual security pairs. The daily volatility is then annulized.</p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card and Modal for Sharpe ratio-->
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5 class="card-title text-center">Highest Price/SQM</h5>
+          <hr>
+          <br>
+            <h5 class="card-text text-center" style="color:white;">{{high_price_sqm_market}}</h5>
+            <h3 class="card-text text-center" style="color:#ec8f8f;">{{high_price_sqm_value}}NOK</h3>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-10">
+              <small class="text-muted">Last updated: 08.09.2020</small>
+            </div>
+            <div class="col-lg-2 text.ce">
+              <h5><a href="#" data-toggle="modal" data-target="#sharperatioModal"><i class="far fa-question-circle" style="color:white;" ></i></a></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="sharperatioModal" tabindex="-1" role="dialog" aria-labelledby="sharperatioModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="volatilityModalLabel">Price divided by square meter</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <p class="lead">The sharpe ratio is used to help investors understand
+                the return of an investment compared to its risk. The ratio is the
+                average return earned in excess of the risk-free rate per unit of
+                volatility or total risk</h5>
+              <hr>
+              <p>The app calculates the sharpe ratio by dividing the yearly expected return by the
+                annulized volatility.</p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Card and Modal for Beta-->
+      <div class="card text-white bg-dark">
+        <div class="card-body">
+          <h5 class="card-title text-center">Lowest Price/SQM</h5>
+          <hr>
+          <br>
+          <h5 class="card-text text-center" style="color:white;">{{low_price_sqm_market}}</h5>
+          <h3 class="card-text text-center" style="color:#a6ec8f;">{{low_price_sqm_value}}NOK</h3>
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-lg-10">
+              <small class="text-muted">Last updated: 08.09.2020</small>
+            </div>
+            <div class="col-lg-2 text.ce">
+              <h5><a href="#" data-toggle="modal" data-target="#betaModal"><i class="far fa-question-circle" style="color:white;" ></i></a></h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="betaModal" tabindex="-1" role="dialog" aria-labelledby="betaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="betaModalLabel">Beta</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+              <p class="lead">If a portfolio has a beta of 1.0, it indicates that its
+                price activity is strongly correlated with the market.
+                A stock with a beta of 1.0 has systematic risk, but the beta calculation
+                 can’t detect any unsystematic risk. Adding a stock to a portfolio
+                  with a beta of 1.0 doesn’t add any risk to the portfolio, but
+                  it also doesn’t increase the likelihood that the portfolio will
+                  provide an excess return.</h5>
+              <hr>
+              <p>The app calculates the sharpe ratio doing a linear regression between
+                the returns of the index the user choose when creating the portfolio and the
+                portfolio returns. The index represents a benchmark of the market.</p>
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info btn-lg" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End card deck -->
+    <br><br>
+
+
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow border-bottom-red">
+          <div class="card-body text-center">
+              <h5>Diagnostics from scan: {{daily_scan.date}} </h5>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+        <!--Listings searched card-->
+        <div class="card shadow card-searched">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-search fa-searched"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{daily_scan.ads_searched}}</h5>
+                <p class="lead">Listings searched</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Not populated card-->
+        <div class="card shadow card-not-populated">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-hand-paper fa-not-populated"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{not_populated}}</h5>
+                <p class="lead">Listings not populated</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- End card deck -->
+    </div> <!-- End row -->
+    <br><br>
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+        <!--complexes card-->
+        <div class="card shadow card-apartment-complex">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-building fa-apartment-complex"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{daily_scan.error_complex}}</h5>
+                <p class="lead">Apartment complexes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Error card-->
+        <div class="card shadow card-error">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-bug fa-error"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{daily_scan.error_price_sqm}}</h5>
+                <p class="lead">Could not find price or m²</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- End card deck -->
+    </div> <!-- End row -->
+    <br><br>
+
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <p class="lead">Listings with error</p>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">URL</th>
+                  <th scope="col">Error</th>
+                  <th scope="col">date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for error in error_listings %}
+                <tr>
+                  <td><a href="{{error.listing}}" style="color:black;font-size:0.8rem;">{{error.listing}}</a></td>
+                  <td>{{error.error_message}}</td>
+                  <td>{{error.date}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </div>
+</div>
+
+<br>
+<br>
+
+
+{% endblock %}

@@ -1,0 +1,246 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow border-left-prim">
+          <div class="card-body text-center">
+              <p class="lead">Market: <b>{{market.district}}</b></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br><br>
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+        <!--database card-->
+        <div class="card shadow card-database">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-database fa-gradient-database"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{listings}}</h5>
+                <p class="lead">Database</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Value card-->
+        <div class="card shadow card-database">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-file-invoice-dollar fa-gradient-database"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{value}}NOK</h5>
+                <p class="lead">Value scanned</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Average sqm card-->
+        <div class="card shadow card-database">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="far fa-chart-bar fa-gradient-database"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{average_sqm_total}}NOK</h5>
+                <p class="lead">Price/SQM</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- End card deck -->
+    </div> <!-- End row -->
+    <br><br>
+
+    <!-- Price chart -->
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow">
+          <canvas id="myChart" width="400" height="150"></canvas>
+        </div>
+      </div>
+    </div>
+    <br><br>
+
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+        <!--database card-->
+        <div class="card shadow card-daily">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-arrow-up fa-daily"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{new_listings}}</h5>
+                <p class="lead">New listings</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Value card-->
+        <div class="card shadow card-daily">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-money-bill-wave fa-daily"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{new_value}}NOK</h5>
+                <p class="lead">New value added</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--Average sqm card-->
+        <div class="card shadow card-daily">
+          <div class="row text-center">
+            <div class="col-md-4">
+              <span>
+              <i class="fas fa-chart-line fa-daily"></i>
+              </span>
+            </div>
+            <div class="col-md-8">
+              <br>
+              <div class="card-body">
+                <h5>{{new_percent}}%</h5>
+                <p class="lead">Last day change</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br><br>
+
+    <div class="row">
+      <div class="col-lg-7">
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <p class="lead">Recent listings</p>
+          </div>
+          <div class="card-body">
+            <ul class="list-group list-group-flush">
+            {% for ad in new_ads %}
+            {% if ad.boligtype == "Leilighet" %}
+              <li class="list-group-item list-group-item-action">
+                <i class="fas fa-building"></i> <a href="{% url 'scraper:listing_detail' pk=ad.pk %}" style="color:black;">{{ad}}</a>
+              </li>
+            {% else %}
+              <li class="list-group-item list-group-item-action">
+                <i class="fas fa-home"></i> <a href="{% url 'scraper:listing_detail' pk=ad.pk %}" style="color:black;">{{ad}}</a>
+              </li>
+            {% endif %}
+            {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-5">
+        <br><br>
+        <div class="row justify-content-center">
+          <div class="card shadow card-price w-75">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <span>
+                <i class="fas fa-file-invoice-dollar fa-gradient-price"></i>
+                </span>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <div class="card-body">
+                  <h5>{{average_price}} NOK</h5>
+                  <p class="lead">Average price</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="row justify-content-center">
+          <div class="card shadow card-price w-75">
+            <div class="row text-center">
+              <div class="col-md-4">
+                <span>
+                <i class="fas fa-file-invoice-dollar fa-gradient-price"></i>
+                </span>
+              </div>
+              <div class="col-md-8">
+                <br>
+                <div class="card-body">
+                  <h5>{{average_sqm}} m²</h5>
+                  <p class="lead">Average Sqm</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <br><br>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+        labels: ['January','February','Mars','April','May','June'],
+        datasets: [{
+          data: [100,20,50,70,30,90],
+          label: "Price change",
+          borderColor: "#3e95cd",
+          pointRadius: 0,
+          fill: false
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+</script>
+
+
+{% endblock %}
