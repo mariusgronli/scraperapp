@@ -14,7 +14,7 @@ from django.db import IntegrityError
 #Import functionality functions
 from scraper.scraper_functions import (find_house_information,find_links_to_ads,
 soup_object,populate_housemodel,update_total_model,update_average_model,
-update_dailystatistic,update_yesterday_statistics,update_price_model,
+update_dailystatistic,update_price_model,
 update_dailystatistic_price)
 #Import diagnostics functions
 from scraper.diagnostic_fucntions import populate_dailyscan,populate_errorlistings
