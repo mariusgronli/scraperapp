@@ -74,7 +74,7 @@ for market,market_link in market_dict.items():
                     break
                 total = update_total_model(market_model,listing)
                 average = update_average_model(market_model,total)
-                update_dailystatistic(dailystat,YD_stats,listing)
+                update_dailystatistic(dailystat,listing)
                 populated_count += 1
             else:
                 print('apartment {} is missing price or sqm'.format(apartment))
@@ -85,8 +85,8 @@ for market,market_link in market_dict.items():
             complex_error += 1
             populate_errorlistings(apartment,'Apartment is an complex with many apartments')
     #Update the dailyprice for the market being iterated
-    update_price_model(market,today)
-    update_dailystatistic_price(dailystat,market,today,yesterday)
+    update_price_model(market_model,today)
+    update_dailystatistic_price(dailystat,market_model,today,yesterday)
     #End iterations through each market
 
 
