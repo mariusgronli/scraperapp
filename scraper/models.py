@@ -92,6 +92,14 @@ class MonthlyStatistic(models.Model):
     def __str__(self):
         return 'Monthly statistics for {} - {}'.format(self.market,self.date)
 
+class PriceModel(models.Model):
+    market = models.ForeignKey(MarketModel,related_name='price',on_delete=models.CASCADE)
+    price = models.FloatField(null=True, blank=True)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return 'Average price: {}'.format(self.price)
+
 class DailyScan(models.Model):
     '''
     The model tracks the daily scan from the scraper

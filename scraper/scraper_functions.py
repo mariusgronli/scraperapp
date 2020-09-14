@@ -6,7 +6,8 @@ from unidecode import unidecode
 from scraper.validators import(vali_has_numbers,vali_house_info,vali_price_info)
 from django.db import IntegrityError
 #import models
-from scraper.models import HouseModel,TotalModel,AverageModel,DailyStatistic
+from scraper.models import HouseModel,TotalModel,AverageModel,DailyStatistic,PriceModel
+from datetime import date,timedelta
 #Main functions
 def soup_object(url):
     '''
@@ -270,7 +271,7 @@ def update_average_model(market,total):
     model.save()
     return model
 
-def update_dailystatistic(daily_obj,yd_stats,listing):
+def update_dailystatistic(daily_obj,listing):
     '''
     daily_obj = ModelObject for DailyStatistic
     yd_stats = ModelObject for DailyStatistic
@@ -280,20 +281,35 @@ def update_dailystatistic(daily_obj,yd_stats,listing):
     '''
     daily_obj.listings_value_dd+=listing.prisantydning
     daily_obj.total_listings_dd+=1
-    if yd_stats != 'na':
-        if yd_stats.listings_value_dd == 0:
-            daily_obj.percent_change_dd = 0
-        else:
-            daily_obj.percent_change_dd = ((daily_obj.listings_value_dd-yd_stats.listings_value_dd)/yd_stats.listings_value_dd)
-    else:
-        daily_obj.percent_change_dd = 0
     daily_obj.save()
 
-def update_yesterday_statistics(market_model,yesterday):
+def update_price_model(market,today):
     try:
-        YD_stats = DailyStatistic.objects.get(market=market_model,date=yesterday)
-        print('Found yesterday YD_STATS')
-    except DailyStatistic.DoesNotExist:
-        YD_stats = 'na'
-        print('Did not find yesterday YD_STATS')
-    return YD_stats
+        avg_model = AverageModel.objects.get(market=market)
+    except AverageModel.DoesNotExist:
+        avg_model = 'NA'
+
+    if avg_model != 'NA':
+        model, created = PriceModel.objects.get_or_create(market=market,date=today)
+        model.price = avg_model.average_price_over_sqm
+        model.save()
+
+def update_dailystatistic_price(daily_obj,market,today,yesterday):
+    today=date.today()
+    yesterday = today - timedelta(1)
+    #Get yesterday price and today price
+    try:
+        yesterday_price = PriceModel.objects.get(market=market,date=yesterday)
+    except PriceModel.DoesNotExist:
+        yesterday_price = 'NA'
+    try:
+        today_price = PriceModel.objects.get(market=market,date=today)
+    except PriceModel.DoesNotExist:
+        today_price = 'NA'
+    #Populate the price change
+    if yesterday_price != 'NA' and isinstance(yesterday_price, (int, float)) and today_price != 'NA':
+        daily_obj.percent_change_dd = (today_price-yesterday_price)/yesterday_price
+        daily_obj.save()
+    else:
+        daily_obj.percent_change_dd = 0
+        daily_obj.save()
