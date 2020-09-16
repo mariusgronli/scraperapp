@@ -8,6 +8,9 @@ import datetime
 class LandingPageView(TemplateView):
     template_name = "scraper/index.html"
 
+class UserDashboardView(TemplateView):
+    template_name = "scraper/user_dashboard.html"
+
 class InformationView(TemplateView):
     template_name = "scraper/dashboard/information.html"
 
