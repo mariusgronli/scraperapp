@@ -1,0 +1,39 @@
+.venstre {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.nt {
+  height: 135px;
+  position: relative;
+  box-sizing: border-box;
+  border: solid black 1px;
+}
+
+.midtstilt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.midtstilt_horisontalt {
+  text-align: center;
+  padding-top: 90px;
+}
+
+#venstreboks {
+  height: 502px;
+  border: solid black 1px;
+}
+
+#chart_1 {
+  height: 200px;
+  border: solid black 1px;
+  float: right;
+}
