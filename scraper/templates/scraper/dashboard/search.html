@@ -1,0 +1,64 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+{% load bootstrap4 %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+      <br><br>
+
+      <div class="row">
+        <div class="col-lg">
+          <div class="card shadow">
+            <div class="card-body">
+            <form method="GET">
+                {% csrf_token %}
+                {% bootstrap_form form %}
+                <div class="col-md text-center">
+                  <input type="submit" value="Send" class="btn btn-success">
+                </div>
+            </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-lg">
+          {% if price %}
+          <div class="card shadow">
+            <div class="card-body">
+              <div class="row text-center">
+                <div class="col-lg">
+                  <p>Average price: {{price}} </p>
+                </div>
+                <div class="col-lg">
+                  <p>Average sqm: {{squaremeter}} </p>
+                </div>
+              </div>
+              <div class="row text-center">
+                <div class="col-lg">
+                  <p>Average price over sqm: {{average_price_over_sqm}} </p>
+                </div>
+                <div class="col-lg">
+                  <p>Number of listings included: {{num_listings}} </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% else %}
+          <div class="card shadow">
+            <div class="card-body">
+              <h5 class="text-center">{{error}}</h5>
+            </div>
+          </div>
+          {% endif %}
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
