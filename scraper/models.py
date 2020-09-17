@@ -111,7 +111,7 @@ class DailyScan(models.Model):
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return 'Ads searched: {}. at {}}'.format(self.ads_searched,self.date)
+        return 'Ads searched: {}. at {}'.format(self.ads_searched,self.date)
 
 class ErrorListings(models.Model):
     '''
