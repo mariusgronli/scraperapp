@@ -295,8 +295,6 @@ def update_price_model(market,today):
         model.save()
 
 def update_dailystatistic_price(daily_obj,market,today,yesterday):
-    today=date.today()
-    yesterday = today - timedelta(1)
     #Get yesterday price and today price
     try:
         yesterday_price = PriceModel.objects.get(market=market,date=yesterday)
@@ -307,8 +305,9 @@ def update_dailystatistic_price(daily_obj,market,today,yesterday):
     except PriceModel.DoesNotExist:
         today_price = 'NA'
     #Populate the price change
-    if yesterday_price != 'NA' and isinstance(yesterday_price, (int, float)) and today_price != 'NA':
-        daily_obj.percent_change_dd = (today_price-yesterday_price)/yesterday_price
+    if yesterday_price != 'NA' and today_price != 'NA':
+        percent_change = (today_price.price-yesterday_price.price)/yesterday_price.price
+        daily_obj.percent_change_dd = round(percent_change,4)
         daily_obj.save()
     else:
         daily_obj.percent_change_dd = 0
