@@ -41,8 +41,7 @@ class MarketPageView(DetailView):
         new_percent = daily_stat.percent_change_dd*100
         #Get the listings
         #put in a filter function instead
-        all_models= HouseModel.objects.filter(market=market)
-        all_models.order_by('-date')
+        all_models= HouseModel.objects.filter(market=market).order_by('-date')
         new_ads= all_models[:10]
         context.update({
             'listings':total.total_listings,
