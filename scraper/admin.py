@@ -1,9 +1,13 @@
 from django.contrib import admin
 from scraper.models import (MarketModel,HouseModel,TotalModel,AverageModel,
     DailyStatistic,MonthlyStatistic,PriceModel,DailyScan,ErrorListings)
+#classes for display
+class HouseModelAdmin(admin.ModelAdmin):
+    list_display=['id','adress','postnummer','date']
+
 # Register your models here.
 admin.site.register(MarketModel)
-admin.site.register(HouseModel)
+admin.site.register(HouseModel,HouseModelAdmin)
 admin.site.register(TotalModel)
 admin.site.register(AverageModel)
 admin.site.register(DailyStatistic)
