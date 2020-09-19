@@ -1,9 +1,51 @@
 from django.shortcuts import render,get_object_or_404
-from django.views.generic import TemplateView,DetailView
+from django.views.generic import TemplateView,DetailView,FormView
 from scraper.models import (TotalModel,DailyStatistic,AverageModel,
     MarketModel,HouseModel,ErrorListings,DailyScan)
+from scraper.forms import PostcodeSearchForm
+from django.urls import reverse_lazy
 import datetime
 # Create your views here.
+
+class PostCodeSearchView(FormView):
+    template_name= "scraper/dashboard/search.html"
+    form_class = PostcodeSearchForm
+    extra_context = dict()
+    success_url=reverse_lazy('scraper:search')
+
+    def form_valid(self, form):
+        # perform a action here
+        data=form.cleaned_data
+        #Find quaryset
+        market = MarketModel.objects.get(district=data['market'])
+        ads = HouseModel.objects.filter(market=market,postnummer=data['zipcode'],boligtype=data['type'])
+        print(ads)
+        #gloval Variables
+        price=0
+        sqm=0
+        price_over_sqm=0
+        searched=0
+        if len(ads)>0:
+            for ad in ads:
+                price += ad.prisantydning
+                sqm += ad.bruttoareal
+                searched +=1
+            self.extra_context["price"] = f"{round((price/searched)):,}"
+            self.extra_context["sqm"] = sqm/searched
+            self.extra_context["price_over_sqm"]=f"{round((price/sqm)):,}"
+            self.extra_context["searched"]=searched
+            self.extra_context["search_bol"]=True
+        else:
+            error='Could not find any listings on zipscode {}. Please try another'.format(data['zipcode'])
+            self.extra_context["error"]=error
+            self.extra_context["search_bol"]=False
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostCodeSearchView, self).get_context_data(**kwargs)
+        context.update(self.extra_context
+        )
+        return context
 
 class LandingPageView(TemplateView):
     template_name = "scraper/index.html"

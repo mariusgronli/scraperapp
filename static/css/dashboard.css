@@ -209,3 +209,28 @@ html, body {
   padding-top: 42px;
   padding-left: 25px;
 }
+
+/*#################### CSS for search app  #########################*/
+.card-bottom{
+  border-bottom: 5px solid #61dc8b;
+}
+
+.fa-bottom{
+	color: #27a753;
+	-webkit-background-clip: text;
+  font-size: 3rem;
+  padding-top: 42px;
+  padding-left: 25px;
+}
+
+.card-error-search{
+  border-bottom: 5px solid #ff3f43;
+}
+
+.fa-error-search{
+	color: #bf1e1e;
+	-webkit-background-clip: text;
+  font-size: 3rem;
+  padding-top: 42px;
+  padding-left: 25px;
+}

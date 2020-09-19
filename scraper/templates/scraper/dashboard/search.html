@@ -9,54 +9,128 @@
       <br><br>
 
       <div class="row">
-        <div class="col-lg">
-          <div class="card shadow">
-            <div class="card-body">
-            <form method="GET">
-                {% csrf_token %}
-                {% bootstrap_form form %}
-                <div class="col-md text-center">
-                  <input type="submit" value="Send" class="btn btn-success">
+        <div class="col-lg-5"> <!-- Search form and error message -->
+          <div class="row">
+            <!-- Search form -->
+              <div class="card shadow w-100">
+                <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="col-md text-center">
+                      <input type="submit" value="Search" class="btn btn-success">
+                    </div>
+                </form>
                 </div>
-            </form>
+              </div>
+          </div>
+              <br>
+          <div class="row justify-content-center">
+            <!-- Error message -->
+            {% if search_bol == False %}
+            <div class="card shadow card-error-search">
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <span>
+                  <i class="fas fa-bug fa-error-search"></i>
+                  </span>
+                </div>
+                <div class="col-md-8">
+                  <br>
+                  <div class="card-body">
+                    <h5>{{error}}</h5>
+                  </div>
+                </div>
+              </div>
             </div>
+            {% endif %}
           </div>
 
+
         </div>
-        <div class="col-lg">
-          {% if price %}
-          <div class="card shadow">
-            <div class="card-body">
-              <div class="row text-center">
-                <div class="col-lg">
-                  <p>Average price: {{price}} </p>
-                </div>
-                <div class="col-lg">
-                  <p>Average sqm: {{squaremeter}} </p>
+        <div class="col-lg-7"> <!-- Search result cards -->
+
+          {% if search_bol == True %}
+          <div class="row justify-content-center">
+            <div class="card-deck w-100">
+              <!--Average price card -->
+              <div class="card shadow card-daily">
+                <div class="row text-center">
+                  <div class="col-md-4">
+                    <span>
+                    <i class="fas fa-money-bill-wave fa-daily"></i>
+                    </span>
+                  </div>
+                  <div class="col-md-8">
+                    <br>
+                    <div class="card-body">
+                      <h5>{{price}}</h5>
+                      <p class="lead">Average price</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="row text-center">
-                <div class="col-lg">
-                  <p>Average price over sqm: {{average_price_over_sqm}} </p>
-                </div>
-                <div class="col-lg">
-                  <p>Number of listings included: {{num_listings}} </p>
+              <!--average sqm card-->
+              <div class="card shadow card-daily">
+                <div class="row text-center">
+                  <div class="col-md-4">
+                    <span>
+                    <i class="fas fa-chart-bar fa-daily"></i>
+                    </span>
+                  </div>
+                  <div class="col-md-8">
+                    <br>
+                    <div class="card-body">
+                      <h5>{{sqm}}</h5>
+                      <p class="lead">Average m²</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          {% else %}
-          <div class="card shadow">
-            <div class="card-body">
-              <h5 class="text-center">{{error}}</h5>
-            </div>
-          </div>
+            </div><!-- End card deck -->
+          </div><!-- End row -->
+            <br><br>
+            <div class="row justify-content-center">
+              <div class="card-deck w-100">
+                <!--average price over sqm card-->
+                <div class="card shadow card-bottom">
+                  <div class="row text-center">
+                    <div class="col-md-4">
+                      <span>
+                      <i class="fas fa-building fa-bottom"></i>
+                      </span>
+                    </div>
+                    <div class="col-md-8">
+                      <br>
+                      <div class="card-body">
+                        <h5>{{price_over_sqm}}</h5>
+                        <p class="lead">Average price over m²</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--Searched card -->
+                <div class="card shadow card-bottom">
+                  <div class="row text-center">
+                    <div class="col-md-4">
+                      <span>
+                      <i class="fas fa-search fa-bottom"></i>
+                      </span>
+                    </div>
+                    <div class="col-md-8">
+                      <br>
+                      <div class="card-body">
+                        <h5>{{searched}}</h5>
+                        <p class="lead">Listings found</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End card deck -->
+            </div> <!-- End row -->
           {% endif %}
-
-
-        </div>
-
-      </div>
+      </div> <!-- End col-->
+    </div> <!-- End row-->
 
     </div>
   </div>
