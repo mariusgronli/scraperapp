@@ -3,6 +3,8 @@ from django.views.generic import TemplateView,DetailView,FormView
 from scraper.models import (TotalModel,DailyStatistic,AverageModel,
     MarketModel,HouseModel,ErrorListings,DailyScan)
 from scraper.forms import PostcodeSearchForm,PriceCalculatorLeilighetForm
+from scraper.views_functions import (update_search_context,
+    update_price_calculator_context)
 from django.urls import reverse_lazy
 import datetime
 # Create your views here.
@@ -20,30 +22,12 @@ class PostCodeSearchView(FormView):
         market = MarketModel.objects.get(district=data['market'])
         ads = HouseModel.objects.filter(market=market,postnummer=data['zipcode'],boligtype=data['type'])
         #gloval Variables
-        price=0
-        sqm=0
-        price_over_sqm=0
-        searched=0
-        if len(ads)>0:
-            for ad in ads:
-                price += ad.prisantydning
-                sqm += ad.bruttoareal
-                searched +=1
-            self.extra_context["price"] = f"{round((price/searched)):,}"
-            self.extra_context["sqm"] = round(sqm/searched)
-            self.extra_context["price_over_sqm"]=f"{round((price/sqm)):,}"
-            self.extra_context["searched"]=searched
-            self.extra_context["search_bol"]=True
-        else:
-            error='Could not find any listings on zipscode {}. Please try another'.format(data['zipcode'])
-            self.extra_context["error"]=error
-            self.extra_context["search_bol"]=False
+        update_search_context(ads,self.extra_context,data)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super(PostCodeSearchView, self).get_context_data(**kwargs)
-        context.update(self.extra_context
-        )
+        context.update(self.extra_context)
         return context
 
 class PriceCalculatorLeilighetView(FormView):
@@ -57,34 +41,13 @@ class PriceCalculatorLeilighetView(FormView):
         data=form.cleaned_data
         #Find quaryset
         market = MarketModel.objects.get(district=data['market'])
-        #gloval Variables
-        price=0
-        sqm=0
-        price_over_sqm=0
-        searched=0
-        estimated_price = 0
-
         #Search without zipcode
         if data['zipcode'] is None:
             ads = HouseModel.objects.filter(
                 market=market,
                 boligtype=data['type'],
                 )
-            if len(ads)>0:
-                for ad in ads:
-                    price += ad.prisantydning
-                    sqm += ad.bruttoareal
-                    searched +=1
-                self.extra_context["price"] = f"{round((price/searched)):,}"
-                self.extra_context["sqm"] = round(sqm/searched)
-                self.extra_context["price_over_sqm"]=f"{round((price/sqm)):,}"
-                self.extra_context["searched"]=searched
-                self.extra_context["estimated_price"]= f"{round((price/sqm)*data['bruttoareal']):,}"
-                self.extra_context["search_bol"]=True
-            else:
-                error='Could not find any listings in {}. Please try another'.format(data['market'])
-                self.extra_context["error"]=error
-                self.extra_context["search_bol"]=False
+            update_price_calculator_context(ads,self.extra_context,data)
         #Search with zipcode
         else:
             ads = HouseModel.objects.filter(
@@ -92,21 +55,7 @@ class PriceCalculatorLeilighetView(FormView):
                 postnummer=data['zipcode'],
                 boligtype=data['type'],
                 )
-            if len(ads)>0:
-                for ad in ads:
-                    price += ad.prisantydning
-                    sqm += ad.bruttoareal
-                    searched +=1
-                self.extra_context["price"] = f"{round((price/searched)):,}"
-                self.extra_context["sqm"] = round(sqm/searched)
-                self.extra_context["price_over_sqm"]=f"{round((price/sqm)):,}"
-                self.extra_context["searched"]=searched
-                self.extra_context["estimated_price"]= f"{round((price/sqm)*data['bruttoareal']):,}"
-                self.extra_context["search_bol"]=True
-            else:
-                error='Could not find any listings in {} with Zipcode: {}. Please try another'.format(data['market'],data['zipcode'])
-                self.extra_context["error"]=error
-                self.extra_context["search_bol"]=False
+            update_price_calculator_context(ads,self.extra_context,data)
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
