@@ -104,9 +104,9 @@ def find_adress(soup):
         adress = soup.find_all('p',class_='u-caption')[0].get_text()
         zip_code = [int(i) for i in adress.split() if i.isdigit()]
         if len(zip_code)==1:
-            zip_code = res[0]
+            zip_code = zip_code[0]
         else:
-            zip_code = res[1]
+            zip_code = zip_code[1]
     except IndexError:
         adress = 'NA'
         zip_code = 0
