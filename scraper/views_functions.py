@@ -10,6 +10,11 @@ def update_search_context(queryset,context,data):
     sqm=0
     price_over_sqm=0
     searched=0
+    #return search variables
+    context["market"]=data['market']
+    context["zipcode"]=data['zipcode']
+    context["type"]=data['type']
+
     #Populate variables
     if len(queryset)>0:
         for ad in queryset:
@@ -22,8 +27,6 @@ def update_search_context(queryset,context,data):
         context["searched"]=searched
         context["search_bol"]=True
     else:
-        error='Could not find any listings on zipscode {}. Please try another'.format(data['zipcode'])
-        context["error"]=error
         context["search_bol"]=False
 
 def update_price_calculator_context(queryset,context,data):
@@ -33,6 +36,10 @@ def update_price_calculator_context(queryset,context,data):
     price_over_sqm=0
     searched=0
     estimated_price = 0
+    context["market"]=data['market']
+    context["zipcode"]=data['zipcode']
+    context["type"]=data['type']
+    context["bruttoareal"]=data['bruttoareal']
     #Populate variables
     if len(queryset)>0:
         for ad in queryset:
@@ -46,9 +53,4 @@ def update_price_calculator_context(queryset,context,data):
         context["estimated_price"]= f"{round((price/sqm)*data['bruttoareal']):,}"
         context["search_bol"]=True
     else:
-        if data['zipcode'] is None:
-            error='Could not find any listings in {}. Please try another'.format(data['market'])
-        else:
-            error='Could not find any listings in {} with Zipcode: {}. Please try another'.format(data['market'],data['zipcode'])
-        context["error"]=error
         context["search_bol"]=False

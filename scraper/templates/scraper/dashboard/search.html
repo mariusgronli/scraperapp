@@ -6,7 +6,18 @@
 <div class="content-container"> <!-- Start summary-->
   <div class="container-fluid">
     <div class="container">
-      <br><br>
+
+      <div class="row">
+        <div class="col-lg">
+          <div class="card shadow border-left-prim w-100">
+            <div class="card-body text-center">
+                <h5 class="text-center"> Search for key statistics using zipcode</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <br>
 
       <div class="row">
         <div class="col-lg-5"> <!-- Search form and error message -->
@@ -28,7 +39,7 @@
           <div class="row justify-content-center">
             <!-- Error message -->
             {% if search_bol == False %}
-            <div class="card shadow card-error-search">
+            <div class="card shadow card-error-search w-100">
               <div class="row text-center">
                 <div class="col-md-4">
                   <span>
@@ -38,13 +49,36 @@
                 <div class="col-md-8">
                   <br>
                   <div class="card-body">
-                    <h5>{{error}}</h5>
+                    <div class="row">
+                      <h5>Listings not found..</h5>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <p class="lead">Search parameters tried:</p>
+                    </div>
+                    <div class="row text-center">
+                      <p class="lead">Type: <b>{{type}}</b></p>
+                    </div>
+                    <div class="row text-center">
+                      <p class="lead">Market: <b>{{market}}</b></p>
+                    </div>
+                    <div class="row text-center">
+                      <p class="lead">zipcode: <b>{{zipcode}}</b></p>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <p class="lead text-center">Hint:</p>
+                    </div>
+                    <div class="row">
+                      <p>Try another zipcode</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             {% endif %}
           </div>
+
 
 
         </div>
@@ -131,6 +165,7 @@
           {% endif %}
       </div> <!-- End col-->
     </div> <!-- End row-->
+    <br><br>
 
     </div>
   </div>
