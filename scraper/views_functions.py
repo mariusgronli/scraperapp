@@ -26,6 +26,8 @@ def update_search_context(queryset,context,data):
         context["price_over_sqm"]=f"{round((price/sqm)):,}"
         context["searched"]=searched
         context["search_bol"]=True
+        context["quaryset"]=queryset[0:10]
+
     else:
         context["search_bol"]=False
 
@@ -52,5 +54,6 @@ def update_price_calculator_context(queryset,context,data):
         context["searched"]=searched
         context["estimated_price"]= f"{round((price/sqm)*data['bruttoareal']):,}"
         context["search_bol"]=True
+        context["quaryset"]=queryset[0:10]
     else:
         context["search_bol"]=False

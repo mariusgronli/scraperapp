@@ -20,7 +20,11 @@ class PostCodeSearchView(FormView):
         data=form.cleaned_data
         #Find quaryset
         market = MarketModel.objects.get(district=data['market'])
-        ads = HouseModel.objects.filter(market=market,postnummer=data['zipcode'],boligtype=data['type'])
+        ads = HouseModel.objects.filter(
+            market=market,
+            postnummer=data['zipcode'],
+            boligtype=data['type']
+            ).order_by('-date')
         #gloval Variables
         update_search_context(ads,self.extra_context,data)
         return super().form_valid(form)
@@ -46,7 +50,7 @@ class PriceCalculatorLeilighetView(FormView):
             ads = HouseModel.objects.filter(
                 market=market,
                 boligtype=data['type'],
-                )
+                ).order_by('-date')
             update_price_calculator_context(ads,self.extra_context,data)
         #Search with zipcode
         else:
@@ -54,7 +58,7 @@ class PriceCalculatorLeilighetView(FormView):
                 market=market,
                 postnummer=data['zipcode'],
                 boligtype=data['type'],
-                )
+                ).order_by('-date')
             update_price_calculator_context(ads,self.extra_context,data)
         return super().form_valid(form)
 

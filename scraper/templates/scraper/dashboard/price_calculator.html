@@ -6,7 +6,7 @@
 <div class="content-container"> <!-- Start summary-->
   <div class="container-fluid">
     <div class="container">
-      
+
 
       <div class="row">
         <div class="col-lg">
@@ -190,6 +190,44 @@
           {% endif %}
       </div> <!-- End col-->
     </div> <!-- End row-->
+    <br><br>
+    {% if search_bol == True %}
+    <div class="row"> <!-- start recent listings-->
+      <div class="col-lg"> <!-- start col-->
+        <div class="card shadow"> <!-- start card-->
+          <div class="card-header text-center">
+            <p class="lead">Recent listings</p>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Adress</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ad in quaryset %}
+                <tr>
+                  {% if ad.boligtype == "Leilighet" %}
+                  <td><i class="fas fa-building"></td>
+                  {% else %}
+                  <td><i class="fas fa-home"></i></td>
+                  {% endif %}
+                  <td><a href="{% url 'scraper:listing_detail' pk=ad.pk %}" style="color:black;">{{ad.adress}}</a></td>
+                  <td>{{ad.prisantydning}}</td>
+                  <td>{{ad.date}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div> <!-- end card-->
+      </div> <!-- end col-->
+    </div> <!-- end recent listings-->
+    {% endif %}
     <br><br>
     </div>
   </div>

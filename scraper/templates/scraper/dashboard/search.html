@@ -167,6 +167,45 @@
     </div> <!-- End row-->
     <br><br>
 
+    {% if search_bol == True %}
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <p class="lead">Recent listings</p>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Type</th>
+                  <th scope="col">Adress</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Date</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for ad in quaryset %}
+                <tr>
+                  {% if ad.boligtype == "Leilighet" %}
+                  <td><i class="fas fa-building"></td>
+                  {% else %}
+                  <td><i class="fas fa-home"></i></td>
+                  {% endif %}
+                  <td><a href="{% url 'scraper:listing_detail' pk=ad.pk %}" style="color:black;">{{ad.adress}}</a></td>
+                  <td>{{ad.prisantydning}}</td>
+                  <td>{{ad.date}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    <br><br>
+
     </div>
   </div>
 </div>
