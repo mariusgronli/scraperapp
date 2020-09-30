@@ -72,7 +72,7 @@ def populate_price_change_graph(market):
         data.append(round(stat.percent_change_dd*100))
         labels.append(str(stat.date.day))
 
-    data = data.reverse()
-    labels = labels.reverse()
+    data.reverse()
+    labels.reverse()
 
     return data,labels
