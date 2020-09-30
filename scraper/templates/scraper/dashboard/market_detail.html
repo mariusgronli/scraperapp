@@ -232,9 +232,9 @@ var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
   data: {
-        labels: ['January','February','Mars','April','May','June'],
+        labels: {{chart_labels|safe}},
         datasets: [{
-          data: [100,20,50,70,30,90],
+          data: {{chart_data|safe}},
           label: "Price change",
           borderColor: "#3e95cd",
           pointRadius: 0,

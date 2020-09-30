@@ -1,5 +1,5 @@
 #imports
-
+from scraper.models import DailyStatistic
 #############################################################################
 ################### Functions for search apps ###############################
 #############################################################################
@@ -57,3 +57,19 @@ def update_price_calculator_context(queryset,context,data):
         context["quaryset"]=queryset[0:10]
     else:
         context["search_bol"]=False
+
+def populate_price_change_graph(market):
+    """
+    Returns the data and labels for the price graph in market detail.
+    Market : MarketModel object
+    """
+    data = list()
+    labels = list()
+
+    queryset = DailyStatistic.objects.filter(market=market).order_by('-date')[:10]
+
+    for stat in queryset:
+        data.append(round(stat.percent_change_dd*100))
+        labels.append(str(stat.date.day))
+
+    return data,labels

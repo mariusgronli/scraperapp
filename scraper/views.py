@@ -4,7 +4,7 @@ from scraper.models import (TotalModel,DailyStatistic,AverageModel,
     MarketModel,HouseModel,ErrorListings,DailyScan)
 from scraper.forms import PostcodeSearchForm,PriceCalculatorLeilighetForm
 from scraper.views_functions import (update_search_context,
-    update_price_calculator_context)
+    update_price_calculator_context,populate_price_change_graph)
 from django.urls import reverse_lazy
 import datetime
 # Create your views here.
@@ -106,6 +106,8 @@ class MarketPageView(DetailView):
         #put in a filter function instead
         all_models= HouseModel.objects.filter(market=market).order_by('-date')
         new_ads= all_models[:10]
+        #get data for chart
+        chart_data,chart_labels = populate_price_change_graph(market)
         context.update({
             'listings':total.total_listings,
             'value':f"{total.total_value:,}",
@@ -116,6 +118,8 @@ class MarketPageView(DetailView):
             'new_ads':new_ads,
             'average_price': f"{round(average.average_price):,}",
             'average_sqm': f"{round(average.average_sqm):,}",
+            'chart_data':chart_data,
+            'chart_labels':chart_labels,
             })
         return context
 
