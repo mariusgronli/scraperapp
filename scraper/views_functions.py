@@ -70,7 +70,7 @@ def populate_price_change_graph(market):
 
     for stat in queryset:
         data.append(round(stat.percent_change_dd*100))
-        labels.append(str(stat.date.day))
+        labels.append("{}.{}".format(stat.date.day,stat.date.month))
 
     data.reverse()
     labels.reverse()

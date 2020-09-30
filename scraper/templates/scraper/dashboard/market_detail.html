@@ -228,6 +228,7 @@
 </div>
 
 <script>
+Chart.defaults.global.legend.display = false;
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
   type: 'line',
@@ -246,7 +247,11 @@ var myChart = new Chart(ctx, {
             yAxes: [{
                 ticks: {
                     beginAtZero: true
-                }
+                },
+                scaleLabel: {
+                    display: true,
+                    labelString: 'Percentage change',
+                },
             }]
         }
     }
