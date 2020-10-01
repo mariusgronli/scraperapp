@@ -49,7 +49,10 @@ def find_house_information(soup):
     information = {}
     information['Prisantydning']= find_price(soup)
     information['Adress'],information['Postnummer']=find_adress(soup)
-    information['Bilde']=find_picture_url(soup)
+    try:
+        information['Bilde']=find_picture_url(soup)
+    except IndexError:
+        pass
     for x,y in zip(description,value):
         information[x]=y
     #Sort information after validators
