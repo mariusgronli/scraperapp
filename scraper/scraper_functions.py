@@ -6,7 +6,8 @@ from unidecode import unidecode
 from scraper.validators import(vali_has_numbers,vali_house_info,vali_price_info)
 from django.db import IntegrityError
 #import models
-from scraper.models import HouseModel,TotalModel,AverageModel,DailyStatistic,PriceModel
+from scraper.models import (HouseModel,TotalModel,AverageModel,DailyStatistic,
+                            PriceModel,ZipCodeModel)
 from datetime import date,timedelta
 #Main functions
 def soup_object(url):
@@ -318,3 +319,13 @@ def update_dailystatistic_price(daily_obj,market,today,yesterday):
     else:
         daily_obj.percent_change_dd = 0
         daily_obj.save()
+
+def update_zipcode_model(market,listing):
+    zip,created = ZipCodeModel.objects.get_or_create(
+                                        market=market,
+                                        housetype=listing.boligtype,
+                                        zipcode=listing.postnummer,
+                                        )
+    if created==False:
+        zip.add_entry()
+    zip.save()

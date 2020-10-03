@@ -15,11 +15,11 @@ from django.db import IntegrityError
 from scraper.scraper_functions import (find_house_information,find_links_to_ads,
 soup_object,populate_housemodel,update_total_model,update_average_model,
 update_dailystatistic,update_price_model,
-update_dailystatistic_price)
+update_dailystatistic_price,update_zipcode_model)
 #Import diagnostics functions
 from scraper.diagnostic_fucntions import populate_dailyscan,populate_errorlistings
 #Import models to be populated
-from scraper.models import MarketModel,HouseModel,DailyStatistic
+from scraper.models import MarketModel,HouseModel,DailyStatistic,ZipCodeModel
 
 
 ############################ Global variables ##############################
@@ -41,7 +41,6 @@ complex_error = 0
 missing_price_sqm_error = 0
 populated_count = 0
 ads_searched = 0
-
 
 market_dict={
     market_1:market_1_link,
@@ -75,6 +74,7 @@ for market,market_link in market_dict.items():
                 total = update_total_model(market_model,listing)
                 average = update_average_model(market_model,total)
                 update_dailystatistic(dailystat,listing)
+                update_zipcode_model(market_model,listing)
                 populated_count += 1
             else:
                 print('apartment {} is missing price or sqm'.format(apartment))
@@ -88,9 +88,6 @@ for market,market_link in market_dict.items():
     update_price_model(market_model,today)
     update_dailystatistic_price(dailystat,market_model,today,yesterday)
     #End iterations through each market
-
-
-
 
 #### Error diagnostics ####
 print('Scraper searched through {}.\n Ads that where populated as model instances: {}\n Ads that was missing price or sqm: {} \n Ads that was apartment complexes: {}'.format(ads_searched,populated_count,missing_price_sqm_error,complex_error))
