@@ -1,7 +1,8 @@
 from django.contrib import admin
 from django.urls import path
 from scraper.views import (DashboardPageView,MarketPageView,ListingDetailView,
-InformationView, UserDashboardView,PostCodeSearchView,PriceCalculatorLeilighetView)
+InformationView, UserDashboardView,PostCodeSearchView,PriceCalculatorLeilighetView,
+PostcodeMappingView)
 
 app_name = 'scraper'
 
@@ -13,4 +14,5 @@ urlpatterns=[
     path('user_dashboard/', UserDashboardView.as_view(), name='user_dashboard'),
     path('search/',PostCodeSearchView.as_view(),name='search'),
     path('price_calculator/',PriceCalculatorLeilighetView.as_view(),name='price_calculator'),
+    path('postcode_mapping/',PostcodeMappingView.as_view(),name='mapping'),
 ]

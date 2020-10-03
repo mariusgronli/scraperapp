@@ -1,0 +1,175 @@
+{% extends "scraper/dashboard/base.html" %}
+{% load static %}
+{% block content %}
+{% load bootstrap4 %}
+
+<div class="content-container"> <!-- Start summary-->
+  <div class="container-fluid">
+    <div class="container">
+
+      <!-- Page header -->
+      <div class="row">
+        <div class="col-lg">
+          <div class="card shadow border-left-prim w-100">
+            <div class="card-body text-center">
+                <h5 class="text-center"> Map the database entries for zipcodes in database</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+
+
+    <!-- Search form -->
+    <div class="row">
+      <div class="col-lg">
+        <div class="card shadow w-100">
+          <div class="card-body">
+          <form method="POST">
+              {% csrf_token %}
+              {% bootstrap_form form %}
+              <div class="col-md text-center">
+                <input type="submit" value="Search" class="btn btn-success">
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+
+    {% if leilighet %}
+    <br>
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <h3>Leilighet</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">Database</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for zip in leilighet %}
+                <tr>
+                  <td>{{zip.zipcode}}</td>
+                  <td>{{zip.database}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer text-center">
+            <a href="#" class="btn btn-primary">See full table</a>
+          </div>
+        </div><!--end card -->
+
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <h3>Rekkehus</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">Database</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for zip in rekkehus %}
+                <tr>
+                  <td>{{zip.zipcode}}</td>
+                  <td>{{zip.database}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if rekkehus %}
+            <div class="card-footer text-center">
+              <a href="#" class="btn btn-primary">See full table</a>
+            </div>
+            {% endif %}
+          </div>
+        </div><!--end card -->
+      </div><!--end card deck -->
+    </div><!--end row -->
+
+    <br>
+    <div class="row justify-content-center">
+      <div class="card-deck w-100">
+
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <h3>Enebolig</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">Database</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for zip in enebolig %}
+                <tr>
+                  <td>{{zip.zipcode}}</td>
+                  <td>{{zip.database}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <div class="card-footer text-center">
+              <a href="#" class="btn btn-primary">See full table</a>
+            </div>
+          </div>
+        </div><!--end card -->
+
+        <div class="card shadow">
+          <div class="card-header text-center">
+            <h3>Tomannsbolig</h3>
+          </div>
+          <div class="card-body">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Zipcode</th>
+                  <th scope="col">Database</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for zip in tomannsbolig %}
+                <tr>
+                  <td>{{zip.zipcode}}</td>
+                  <td>{{zip.database}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if tomannsbolig %}
+            <div class="card-footer text-center">
+              <a href="#" class="btn btn-primary">See full table</a>
+            </div>
+            {% endif %}
+          </div>
+        </div><!--end card -->
+      </div><!--end card deck -->
+    </div><!--end row -->
+    <br>
+    <br>
+    {% endif %}
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

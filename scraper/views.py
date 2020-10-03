@@ -2,12 +2,33 @@ from django.shortcuts import render,get_object_or_404
 from django.views.generic import TemplateView,DetailView,FormView
 from scraper.models import (TotalModel,DailyStatistic,AverageModel,
     MarketModel,HouseModel,ErrorListings,DailyScan)
-from scraper.forms import PostcodeSearchForm,PriceCalculatorLeilighetForm
+from scraper.forms import (PostcodeSearchForm,PriceCalculatorLeilighetForm,
+                        PostcodeMappingForm)
 from scraper.views_functions import (update_search_context,
-    update_price_calculator_context,populate_price_change_graph)
+    update_price_calculator_context,populate_price_change_graph,
+    update_mapping_context)
 from django.urls import reverse_lazy
 import datetime
 # Create your views here.
+
+class PostcodeMappingView(FormView):
+    template_name = "scraper/dashboard/postcode_mapping.html"
+    form_class = PostcodeMappingForm
+    extra_context = dict()
+    success_url=reverse_lazy('scraper:mapping')
+
+    def form_valid(self, form):
+        # perform a action here
+        data=form.cleaned_data
+        #update context
+        update_mapping_context(self,data,self.extra_context)
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PostcodeMappingView, self).get_context_data(**kwargs)
+        context.update(self.extra_context)
+        return context
+
 
 class PostCodeSearchView(FormView):
     template_name= "scraper/dashboard/search.html"

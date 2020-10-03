@@ -1,6 +1,7 @@
 from django.contrib import admin
 from scraper.models import (MarketModel,HouseModel,TotalModel,AverageModel,
-    DailyStatistic,MonthlyStatistic,PriceModel,DailyScan,ErrorListings)
+    DailyStatistic,MonthlyStatistic,PriceModel,DailyScan,ErrorListings,
+    ZipCodeModel)
 #classes for display
 class HouseModelAdmin(admin.ModelAdmin):
     list_display=['id','adress','postnummer','date']
@@ -15,3 +16,4 @@ admin.site.register(MonthlyStatistic)
 admin.site.register(PriceModel)
 admin.site.register(DailyScan)
 admin.site.register(ErrorListings)
+admin.site.register(ZipCodeModel)

@@ -36,3 +36,13 @@ class PriceCalculatorLeilighetForm(forms.Form):
     zipcode = forms.IntegerField(max_value=9999,required=False)
     bruttoareal = forms.IntegerField(max_value=999)
     type = forms.ChoiceField(choices=CHOICES_TYPE)
+
+class PostcodeMappingForm(forms.Form):
+
+    CHOICES_MARKET = (
+       ('Horten', 'Horten'),
+       ('Sandefjord', 'Sandefjord'),
+       ('Holmestrand', 'Holmestrand'),
+       ('Tønsberg','Tønsberg'),
+    )
+    market = forms.ChoiceField(choices=CHOICES_MARKET)

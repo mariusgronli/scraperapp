@@ -68,20 +68,26 @@
             <i class="fa fa-rocket" aria-hidden="true"></i> Price calculator
           </a>
         </li>
-        <li class="header">Settings</li>
+        <li class="header">Backend</li>
         <li>
-          <a href="{% url 'scraper:information' %}">
-            <i class="fa fa-info-circle" aria-hidden="true"></i> Information
+          <a href="#">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> Diagnostics
           </a>
         </li>
         <li>
-          <a href="#">
-            <i class="fa fa-cog" aria-hidden="true"></i> Settings
+          <a href="{% url 'scraper:mapping' %}">
+            <i class="fa fa-cog" aria-hidden="true"></i> Zipcodes
           </a>
         </li>
         <li>
           <a href="{% url 'admin:index' %}">
             <i class="fas fa-user-shield" aria-hidden="true"></i> Admin
+          </a>
+        </li>
+        <li class="header">Information</li>
+        <li>
+          <a href="{% url 'scraper:information' %}">
+            <i class="fa fa-info-circle" aria-hidden="true"></i> About us
           </a>
         </li>
       </ul>

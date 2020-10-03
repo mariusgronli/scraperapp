@@ -1,6 +1,11 @@
 from django.db import models
 from datetime import datetime
 # Create your models here.
+
+#############################################################################
+########################   Scraper models  ##################################
+#############################################################################
+
 class MarketModel(models.Model):
     '''
     Model for markets
@@ -55,6 +60,11 @@ class TotalModel(models.Model):
     def __str__(self):
         return 'Total model for {}'.format(self.market)
 
+#############################################################################
+########################   statistic models #################################
+#############################################################################
+
+
 class AverageModel(models.Model):
     '''
     '''
@@ -99,6 +109,31 @@ class PriceModel(models.Model):
 
     def __str__(self):
         return 'Average price: {}'.format(self.price)
+
+class ZipCodeModel(models.Model):
+    """
+    Model is used to map how many instances of HouseModel that exist on each
+    zipcode for every market and housetype.
+    """
+    market = models.ForeignKey(MarketModel,related_name='zipcode',on_delete=models.CASCADE)
+    housetype = models.CharField(max_length=200, null=True, blank=True)
+    zipcode = models.IntegerField(null=True, blank=True)
+    database = models.IntegerField(null=True, blank=True,default=1)
+
+    def __str__(self):
+        return 'Market: {},Type: {}, Zipcode: {}, Database: {}'.format(
+            self.market,
+            self.housetype,
+            self.zipcode,
+            self.database,
+            )
+    def add_entry(self):
+        self.database += 1
+        self.save()
+
+#############################################################################
+######################## Diagnostic models ##################################
+#############################################################################
 
 class DailyScan(models.Model):
     '''

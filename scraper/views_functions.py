@@ -1,8 +1,35 @@
 #imports
-from scraper.models import DailyStatistic
+from scraper.models import DailyStatistic,ZipCodeModel,MarketModel
+from django.core.paginator import Paginator
 #############################################################################
 ################### Functions for search apps ###############################
 #############################################################################
+
+def update_mapping_context(self,data,context):
+    market = MarketModel.objects.get(district=data['market'])
+    #Generating querysets for each type
+    queryset_leilighet = ZipCodeModel.objects.filter(
+                                            market=market,
+                                            housetype='Leilighet',
+                                            ).order_by('-database')[0:5]
+    queryset_rekkehus = ZipCodeModel.objects.filter(
+                                            market=market,
+                                            housetype='Rekkehus',
+                                            ).order_by('-database')[0:5]
+    queryset_enebolig = ZipCodeModel.objects.filter(
+                                            market=market,
+                                            housetype='Enebolig',
+                                            ).order_by('-database')[0:5]
+    queryset_tomannsbolig = ZipCodeModel.objects.filter(
+                                            market=market,
+                                            housetype='Tomannsbolig',
+                                            ).order_by('-database')[0:5]
+    #Update context:
+    context['leilighet']=queryset_leilighet
+    context['rekkehus']=queryset_rekkehus
+    context['enebolig']=queryset_enebolig
+    context['tomannsbolig']=queryset_tomannsbolig
+
 
 def update_search_context(queryset,context,data):
     #gloval Variables
