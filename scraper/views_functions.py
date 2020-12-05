@@ -96,8 +96,13 @@ def populate_price_change_graph(market):
     queryset = DailyStatistic.objects.filter(market=market).order_by('-date')[:10]
 
     for stat in queryset:
-        data.append(round(stat.percent_change_dd*100))
-        labels.append("{}.{}".format(stat.date.day,stat.date.month))
+        try:
+            data.append(round(stat.percent_change_dd*100))
+            labels.append("{}.{}".format(stat.date.day,stat.date.month))
+        except TypeError:
+            data.append(0)
+            data.append('No data')
+
 
     data.reverse()
     labels.reverse()
