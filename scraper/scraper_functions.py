@@ -83,7 +83,7 @@ def find_links_to_ads(link):
             all_objects = all_objects[1:]
             if len(all_objects)!= 0:
                 for y in all_objects:
-                    ad_link = 'http://finn.no'+y['href']
+                    ad_link = y['href']
                     annonser.append(ad_link)
             else:
                 print('Did not find more ads, search ended at page: {}'.format(x))
@@ -93,7 +93,7 @@ def find_links_to_ads(link):
         all_objects = soup.find_all('a',class_='ads__unit__link')
         all_objects = all_objects[1:]
         for y in all_objects:
-            ad_link = 'http://finn.no'+y['href']
+            ad_link = y['href']
             annonser.append(ad_link)
 
     return annonser
