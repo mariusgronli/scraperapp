@@ -1,6 +1,6 @@
 from django.shortcuts import render,get_object_or_404
 from django.views.generic import TemplateView,DetailView,FormView
-from scraper.models import (TotalModel,DailyStatistic,AverageModel,
+from scraper.models import (NewTotalModel,DailyStatistic,AverageModel,
     MarketModel,HouseModel,ErrorListings,DailyScan)
 from scraper.forms import (PostcodeSearchForm,PriceCalculatorLeilighetForm,
                         PostcodeMappingForm)
@@ -113,7 +113,7 @@ class MarketPageView(DetailView):
         context = super(MarketPageView, self).get_context_data(**kwargs)
         market = get_object_or_404(MarketModel,pk=pk)
         #Get the total values
-        total = TotalModel.objects.get(market=market)
+        total = NewTotalModel.objects.get(market=market)
         average = AverageModel.objects.get(market=market)
         #Get the dailystats
         today = datetime.date.today()
@@ -163,7 +163,7 @@ class DashboardPageView(TemplateView):
         low_price_sqm_value = 10000000
         today = datetime.date.today()
         #Calculations
-        totalmodels = TotalModel.objects.all()
+        totalmodels = NewTotalModel.objects.all()
         dailystats = DailyStatistic.objects.filter(date=today)
         averagestats = AverageModel.objects.all()
         total_markets = len(totalmodels)
@@ -190,14 +190,9 @@ class DashboardPageView(TemplateView):
         try:
             daily_scan = DailyScan.objects.get(date=today)
         except DailyScan.DoesNotExist:
-            try:
-                daily_scan = DailyScan.objects.get(date=yesterday)
-            except DailyScan.DoesNotExist:
-                daily_scan = None
-        if daily_scan==None:
-            not_populated = 0
-        else:
-            not_populated = daily_scan.ads_searched - daily_scan.populated_count
+            daily_scan = DailyScan.objects.get(date=yesterday)
+
+        not_populated = daily_scan.ads_searched - daily_scan.populated_count
 
         error_listings = ErrorListings.objects.filter(date=today)
         if len(error_listings)==0:

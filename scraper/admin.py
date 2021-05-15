@@ -1,5 +1,5 @@
 from django.contrib import admin
-from scraper.models import (MarketModel,HouseModel,TotalModel,AverageModel,
+from scraper.models import (MarketModel,HouseModel,NewTotalModel,AverageModel,
     DailyStatistic,MonthlyStatistic,PriceModel,DailyScan,ErrorListings,
     ZipCodeModel)
 #classes for display
@@ -9,7 +9,7 @@ class HouseModelAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(MarketModel)
 admin.site.register(HouseModel,HouseModelAdmin)
-admin.site.register(TotalModel)
+admin.site.register(NewTotalModel)
 admin.site.register(AverageModel)
 admin.site.register(DailyStatistic)
 admin.site.register(MonthlyStatistic)

@@ -6,7 +6,7 @@ from unidecode import unidecode
 from scraper.validators import(vali_has_numbers,vali_house_info,vali_price_info)
 from django.db import IntegrityError
 #import models
-from scraper.models import (HouseModel,TotalModel,AverageModel,DailyStatistic,
+from scraper.models import (HouseModel,NewTotalModel,AverageModel,DailyStatistic,
                             PriceModel,ZipCodeModel)
 from datetime import date,timedelta
 #Main functions
@@ -257,7 +257,7 @@ def populate_housemodel(market,house_info_dict,price_info_dict,url):
     return listing
 
 def update_total_model(market,listing):
-    model, created = TotalModel.objects.get_or_create(market=market)
+    model, created = NewTotalModel.objects.get_or_create(market=market)
     model.total_listings+=1
     model.total_value+=listing.prisantydning
     if listing.bruttoareal >=1:

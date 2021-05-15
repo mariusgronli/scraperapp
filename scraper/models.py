@@ -60,6 +60,17 @@ class TotalModel(models.Model):
     def __str__(self):
         return 'Total model for {}'.format(self.market)
 
+class NewTotalModel(models.Model):
+    '''
+    '''
+    market = models.ForeignKey(MarketModel,related_name='newtotal',on_delete=models.CASCADE)
+    total_listings = models.IntegerField(null=True, blank=True,default=0)
+    total_value = models.BigIntegerField(null=True, blank=True,default=0)
+    total_sqm = models.IntegerField(null=True, blank=True,default=0)
+
+    def __str__(self):
+        return 'Total model for {}'.format(self.market)
+
 #############################################################################
 ########################   statistic models #################################
 #############################################################################
