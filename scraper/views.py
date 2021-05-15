@@ -190,15 +190,16 @@ class DashboardPageView(TemplateView):
         try:
             daily_scan = DailyScan.objects.get(date=today)
         except DailyScan.DoesNotExist:
+            try:
             daily_scan = DailyScan.objects.get(date=yesterday)
+            except DailyScan.DoesNotExist:
+                daily_scan = None
         not_populated = daily_scan.ads_searched - daily_scan.populated_count
 
         error_listings = ErrorListings.objects.filter(date=today)
         if len(error_listings)==0:
             error_listings = ErrorListings.objects.filter(date=yesterday)
         error_listings = error_listings[:10]
-
-
 
         context.update({
             'value': f"{total_value:,}",
