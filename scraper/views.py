@@ -194,7 +194,10 @@ class DashboardPageView(TemplateView):
                 daily_scan = DailyScan.objects.get(date=yesterday)
             except DailyScan.DoesNotExist:
                 daily_scan = None
-        not_populated = daily_scan.ads_searched - daily_scan.populated_count
+        if daily_scan==None:
+            not_populated = 0
+        else:
+            not_populated = daily_scan.ads_searched - daily_scan.populated_count
 
         error_listings = ErrorListings.objects.filter(date=today)
         if len(error_listings)==0:
