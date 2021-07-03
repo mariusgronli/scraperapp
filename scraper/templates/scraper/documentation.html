@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Real estate API</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+
+    <!-- For icons-->
+    <script src="https://kit.fontawesome.com/9bc89fa1dd.js" crossorigin="anonymous"></script>
+
+    <!-- Google fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&display=swap" rel="stylesheet">
+
+    <!-- Scroll animations  -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://cdn.rawgit.com/michalsnik/aos/2.1.1/dist/aos.js"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/documentation.css'%}">
+
+  </head>
+  <body>
+      <div class="container top-big">
+        <div class="row flex-center">
+          <h1 class="header">Norwegian real estate API <i class="fas fa-database"></i></h1>
+        </div>
+        <div class="row flex-center">
+          <h4 style="color:white;"> - created by <a href="https://www.mariusgronli.io" class="intro-link">mariusgronli.io</a></h4>
+        </div>
+
+        <div class="animation-wrapper"
+          data-aos="fade-up"
+          data-aos-delay="500"
+          data-aos-duration="1000">
+          <div class="row top-big flex-center">
+            <h2 class="subheader">GET &#124; All markets tracked</h2>
+          </div>
+          <div class="row top-small flex-col">
+              <h5 class="uri-header text-center"> URI: https://mariusgronli.pythonanywhere.com/api/markets/</h5>
+              <script src="https://gist.github.com/mariusgronli/7c4f4aa87b19cac54265460e6969128e.js"></script>
+          </div>
+          <div class="row flex-center">
+            <a href="https://mariusgronli.pythonanywhere.com/api/markets/" class="btn btn-light">Browsable API</a>
+          </div>
+        </div>
+
+        <div class="animation-wrapper"
+          data-aos="fade-up"
+          data-aos-delay="1000"
+          data-aos-duration="1000">
+          <div class="row top-big flex-center">
+            <h2 class="subheader">GET &#124; All ads for the last 10 days</h2>
+          </div>
+          <div class="row top-small flex-col">
+              <h5 class="uri-header text-center"> URI: https://mariusgronli.pythonanywhere.com/api/{market}/ads</h5>
+              <script src="https://gist.github.com/mariusgronli/ba6689c61a707ff808b495371cc5f6cc.js"></script>
+          </div>
+        </div>
+
+        <div class="animation-wrapper"
+          data-aos="fade-up"
+          data-aos-delay="500"
+          data-aos-duration="1000">
+          <div class="row top-big flex-center">
+            <h2 class="subheader">GET &#124; Daily search statistics</h2>
+          </div>
+          <div class="row top-small flex-col">
+              <h5 class="uri-header text-center"> URI: https://mariusgronli.pythonanywhere.com/api/{market}/daily</h5>
+              <script src="https://gist.github.com/mariusgronli/04de14eb732c17ee20f0688edfb47c66.js"></script>
+          </div>
+        </div>
+
+        <div class="animation-wrapper"
+          data-aos="fade-up"
+          data-aos-delay="500"
+          data-aos-duration="1000">
+        <div class="row top-big flex-center">
+          <h2 class="subheader">GET &#124; Average statistics for market</h2>
+        </div>
+        <div class="row top-small flex-col bot-big">
+            <h5 class="uri-header text-center"> URI: https://mariusgronli.pythonanywhere.com/api/{market}/average</h5>
+            <script src="https://gist.github.com/mariusgronli/adf60987e271cd05f66785544a0ef28a.js"></script>
+        </div>
+      </div>
+    </div>
+    <script>AOS.init();</script>
+  </body>
+</html>

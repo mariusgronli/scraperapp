@@ -11,6 +11,9 @@ from django.urls import reverse_lazy
 import datetime
 # Create your views here.
 
+class ApiDocumentation(TemplateView):
+    template_name = "scraper/documentation.html"
+
 class PostcodeMappingView(FormView):
     template_name = "scraper/dashboard/postcode_mapping.html"
     form_class = PostcodeMappingForm

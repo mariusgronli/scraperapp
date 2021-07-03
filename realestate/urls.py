@@ -18,7 +18,7 @@ from django.urls import path,include
 from scraper import views
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',views.LandingPageView.as_view(),name='home'),
+    path('',views.ApiDocumentation.as_view(),name='home'),
     path('scraper/',include('scraper.urls')),
-    #path('api/',include('scraper.api.urls'))
+    path('api/',include('scraper_api.urls'))
 ]

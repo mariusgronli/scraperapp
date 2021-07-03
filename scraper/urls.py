@@ -2,11 +2,12 @@ from django.contrib import admin
 from django.urls import path
 from scraper.views import (DashboardPageView,MarketPageView,ListingDetailView,
 InformationView, UserDashboardView,PostCodeSearchView,PriceCalculatorLeilighetView,
-PostcodeMappingView)
+PostcodeMappingView,ApiDocumentation)
 
 app_name = 'scraper'
 
 urlpatterns=[
+    path('documentation/', ApiDocumentation.as_view(),name='documentation'),
     path('dashboard/', DashboardPageView.as_view(),name='dashboard'),
     path('Market/<str:pk>/',MarketPageView.as_view(),name='market_detail'),
     path('Listing/<int:pk>/',ListingDetailView.as_view(),name='listing_detail'),
